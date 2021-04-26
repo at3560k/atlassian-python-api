@@ -49,6 +49,59 @@ Add a connection:
         username='admin',
         password='admin')
 
+Key/Cert Based authentication
+-----------------------------
+
+Add a connection using `mutual
+TLS<https://en.wikipedia.org/wiki/Mutual_authentication>` key/cert based
+authentication:
+
+.. note::
+   Key/Cert Based authentication does not appear to be directly
+   supported by the module, but you can achieve it by supplying a
+   session via the `requests` object.
+
+   You need not supply ``verify_ssl`` if you wish to use the requests
+   default store.
+
+.. code-block:: python
+
+    from atlassian import Jira
+    from atlassian import Confluence
+    from atlassian import Bitbucket
+    from atlassian import ServiceDesk
+    from atlassian import Xray
+
+    import requests
+    session = requests.Session()
+    session.cert = ('/path/to/some.crt', '/path/to/some.key')
+
+    jira = Jira(
+        url='http://localhost:8080',
+        verify_ssl = '/path/to/your/ca.pem',
+        session=session)
+
+    confluence = Confluence(
+        url='http://localhost:8090',
+        verify_ssl = '/path/to/your/ca.pem',
+        session=session)
+
+    bitbucket = Bitbucket(
+        url='http://localhost:7990',
+        verify_ssl = '/path/to/your/ca.pem',
+        session=session)
+
+    service_desk = ServiceDesk(
+        url='http://localhost:8080',
+        verify_ssl = '/path/to/your/ca.pem',
+        session=session)
+
+    xray = Xray(
+        url='http://localhost:8080',
+        verify_ssl = '/path/to/your/ca.pem',
+        session=session)
+
+
 Other authentication methods
 ----------------------------
 
